@@ -1,6 +1,6 @@
-use axum::{extract::State, routing::get, Json, Router};
+use axum::{extract::State, routing::get, Router, response::IntoResponse, http::StatusCode, Json};
 use axum_extra::routing::SpaRouter;
-use openai_api::{Client, api::{CompletionArgs, Engine}};
+use openai_api::{Client};
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
@@ -26,30 +26,19 @@ pub fn handle_router(api_key: String, static_folder: PathBuf) -> Router {
         .route("/api/prompt", get(generate_prompt))
         .with_state(prompt_client)
 }
+pub async fn generate_prompt(State(state): State<AppState>) -> impl IntoResponse {
 
-#[axum_macros::debug_handler]
-pub async fn generate_prompt(State(state): State<AppState>) -> axum::Json<String> {
-    let args = CompletionArgs::builder()
-        .prompt(
-            "Generate a pair of colors like below: 
-    Example: 
-    Color 1: #000000 (black) 
-    Color 2: #FFFFFF (white) 
-        
-    Color 1: 
-    Color 2:"
-        )
-        .max_tokens(200)
-        .temperature(0.7)
-        .top_p(0.9)
-        .stop(vec!["\n".into()]);
+    let prompt = "Generate a random name.
+    
+    Example:
+    Name: John Doe
+    
+    Name:";
 
-    match state.client.complete_prompt(args).await {
-        Ok(res) =>     Json(
-        res.choices[0].text
-    ),
-        Err(_) => Json("There was an error!".to_string())
+    match state.client.complete_prompt_sync(prompt) {
+        Ok(result) => (StatusCode::OK, Json(result.choices[0].text.clone())).into_response(),
+        Err(err) => (StatusCode::INTERNAL_SERVER_ERROR, format!(":( There was an error: {err}")).into_response()
     }
 
-
+    
 }
