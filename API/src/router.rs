@@ -26,6 +26,7 @@ pub fn handle_router(api_key: String, static_folder: PathBuf) -> Router {
         .route("/api/prompt", get(generate_prompt))
         .with_state(prompt_client)
 }
+
 pub async fn generate_prompt(State(state): State<AppState>) -> impl IntoResponse {
 
     let prompt = "Generate a random name.

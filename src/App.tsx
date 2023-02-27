@@ -33,7 +33,7 @@ function App() {
         <button type="submit" className='bg-gray-300 px-5 py-2 shadow-md'>Generate a name!</button>
       </form>
       <div id="prompt-container" className='text-sm p-5 bg-stone-100 shadow-md w-[calc(100%-5rem)]'>
-        <p id="prompt-text">Try generating a prompt!</p>
+        <p id="prompt-text">Try generating a name!</p>
       </div>
     </div>
   )
