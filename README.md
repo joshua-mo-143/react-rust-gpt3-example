@@ -1,7 +1,7 @@
-## Rust & React GPT-3 API usage example
+## Rust & React GPT-3 usage example
 
 ### Introduction
-This repo is intended to show an example of how you can write an API that uses the GPT-3 ("ChatGPT") API to create meaningful data based on an input.
+This repo is intended to show an example of how you can write a full-stack web app that uses GPT-3 to create meaningful data based on an input.
 
 ### Preview
 ![](./Screenshot.png)

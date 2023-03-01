@@ -10,11 +10,11 @@ async fn axum(
     #[shuttle_secrets::Secrets] secrets: SecretStore,
     #[shuttle_static_folder::StaticFolder] static_folder: PathBuf,
 ) -> shuttle_service::ShuttleAxum {
-    let chatgpt_token = secrets
-        .get("CHATGPT_API_KEY")
-        .expect("You need to set CHATGPT_API_KEY in your Secrets.toml file!");
+    let gpt3_token = secrets
+        .get("GPT3_API_KEY")
+        .expect("You need to set GPT3_API_KEY in your Secrets.toml file!");
 
-    let router = handle_router(chatgpt_token, static_folder);
+    let router = handle_router(gpt3_token, static_folder);
     let sync_wrapper = SyncWrapper::new(router);
 
     Ok(sync_wrapper)
