@@ -7,12 +7,12 @@ publish = false
 [lib]
 
 [dependencies]
-shuttle-service = { version = "0.10.0", features = ["web-axum"] }
+shuttle-service = { version = "0.11.0", features = ["web-axum"] }
 axum = "0.6.4"
 sync_wrapper = "0.1.2"
-shuttle-secrets = "0.10.0"
+shuttle-secrets = "0.11.0"
 serde = { version = "1.0.152", features = ["derive"] }
 axum-macros = "0.3.4"
 openai-api = "0.1.4"
-shuttle-static-folder = "0.10.0"
+shuttle-static-folder = "0.11.0"
 axum-extra = { version = "0.5.0", features = ["spa"] }
