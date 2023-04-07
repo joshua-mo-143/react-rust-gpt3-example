@@ -1,6 +1,6 @@
-use axum::{extract::State, routing::get, Router, response::IntoResponse, http::StatusCode, Json};
+use axum::{extract::State, http::StatusCode, response::IntoResponse, routing::get, Json, Router};
 use axum_extra::routing::SpaRouter;
-use openai_api::{Client};
+use openai_api::Client;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
@@ -28,7 +28,6 @@ pub fn handle_router(api_key: String, static_folder: PathBuf) -> Router {
 }
 
 pub async fn generate_prompt(State(state): State<AppState>) -> impl IntoResponse {
-
     let prompt = "Generate a random name.
     
     Example:
@@ -38,8 +37,10 @@ pub async fn generate_prompt(State(state): State<AppState>) -> impl IntoResponse
 
     match state.client.complete_prompt_sync(prompt) {
         Ok(result) => (StatusCode::OK, Json(result.choices[0].text.clone())).into_response(),
-        Err(err) => (StatusCode::INTERNAL_SERVER_ERROR, format!(":( There was an error: {err}")).into_response()
+        Err(err) => (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            format!(":( There was an error: {err}"),
+        )
+            .into_response(),
     }
-
-    
 }
